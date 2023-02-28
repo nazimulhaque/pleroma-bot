@@ -489,7 +489,7 @@ def main():
                     posts_ids = file_posts
                 except json.JSONDecodeError:  # pragma: todo
                     pass
-        else:    # pragma: todo
+        else:  # pragma: todo
             with open(posts_path, "w"):
                 pass
         tweets_temp_path = os.path.join(base_path, "tweets")
@@ -614,7 +614,7 @@ def main():
                             tweets["includes"]["polls"].append(poll)
                 elif user.archive:
                     tweets = user.process_archive(
-                        user.archive, start_time=date_fedi
+                        user.archive, start_time=None
                     )
                     user.result_count = len(tweets["data"])
                 elif user.rss:  # pragma: todo
@@ -681,7 +681,7 @@ def main():
                             retweet_id = tweet["retweet_id"]
                         except KeyError:  # pragma: todo
                             retweet_id = None
-                        post_id = user.post(
+                        post_id, already_posted = user.post(
                             (
                                 tweet["id"],
                                 tweet["text"],
@@ -694,6 +694,16 @@ def main():
                             tweets_to_post["media_processed"],
                             cw=tweet["cw"]
                         )
+                        if not already_posted:
+                            # TODO: Call function to directly manipulate DB in order to update published time here
+                            logger.info(
+                                f"Tweet with ID: \t {tweet['id']} has been successfully posted."
+                            )
+                        else:
+                            logger.info(
+                                f"Tweet with ID: \t {tweet['id']} already posted in Pleroma with ID: \t {post_id}. "
+                                f"Skipping to avoid duplicate."
+                            )
                         posted[tweet["id"]] = post_id
                         posts_ids = user.posts_ids
                         with open(posts_path, "r+") as f:
@@ -701,8 +711,8 @@ def main():
                         pbar.update(1)
                         time.sleep(user.delay_post)
                     pbar.close()
-                if not user.skip_pin:
-                    user.check_pinned(posted)
+                # if not user.skip_pin:
+                # user.check_pinned(posted)
 
                 if not (user.no_profile or args.noProfile):
                     if user.skip_profile:

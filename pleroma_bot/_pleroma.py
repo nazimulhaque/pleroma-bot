@@ -129,7 +129,7 @@ def post_pleroma(
         sensitive: bool,
         media: list = None,
         cw: str = None
-) -> str:
+) -> tuple[str, bool]:
     """Post the given text to the Pleroma instance associated with the
     User object
 
@@ -148,6 +148,7 @@ def post_pleroma(
     :rtype: str
     """
     post_id = None
+    already_posted = False
     pleroma_post_url = f"{self.pleroma_base_url}/api/v1/statuses"
     pleroma_media_url = f"{self.pleroma_base_url}/api/v1/media"
 
@@ -170,13 +171,14 @@ def post_pleroma(
             headers=self.header_pleroma,
         )
         if response.ok:
+            already_posted = True
             logger.warning(
                 _(
                     "Tweet already posted in Pleroma:\t{} - {}."
                     " Skipping to avoid duplicates..."
                 ).format(tweet_id, posts[tweet_id])
             )
-            return post_id
+            return post_id, already_posted
 
     if (
             retweet_id
@@ -195,7 +197,7 @@ def post_pleroma(
         if not response.ok:
             response.raise_for_status()
         logger.debug(_("Reblog in Pleroma:\t{}").format(str(response)))
-        return post_id
+        return post_id, already_posted
 
     media_ids = []
     video_ids = []
@@ -371,7 +373,7 @@ def post_pleroma(
         logger.debug(_("Post in Pleroma:\t{}").format(str(response)))
         post_id = json.loads(response.text)["id"]
         self.posts_ids[self.pleroma_base_url].update({tweet_id: post_id})
-    return post_id
+    return post_id, already_posted
 
 
 def update_pleroma(self):
