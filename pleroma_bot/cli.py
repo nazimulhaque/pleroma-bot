@@ -50,6 +50,7 @@ from .__init__ import __version__
 from ._utils import config_wizard
 from ._utils import process_parallel, Locker
 
+from .db_handler import update_db
 
 class User(object):
     from ._twitter import get_tweets
@@ -695,15 +696,7 @@ def main():
                             cw=tweet["cw"]
                         )
                         if not already_posted:
-                            # TODO: Call function to directly manipulate DB in order to update published time here
-                            logger.info(
-                                f"Tweet with ID: \t {tweet['id']} has been successfully posted."
-                            )
-                        else:
-                            logger.info(
-                                f"Tweet with ID: \t {tweet['id']} already posted in Pleroma with ID: \t {post_id}. "
-                                f"Skipping to avoid duplicate."
-                            )
+                            update_db(tweet['id'], tweet['created_at'])
                         posted[tweet["id"]] = post_id
                         posts_ids = user.posts_ids
                         with open(posts_path, "r+") as f:

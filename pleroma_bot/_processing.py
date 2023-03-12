@@ -192,7 +192,7 @@ def process_tweets(self, tweets_to_post):
                 datetime.strptime(tweet_date, "%Y-%m-%dT%H:%M:%S.000Z"),
                 self.original_date_format,
             )
-            orig_date = f"\n\n[{date}]"
+            orig_date = f"\n\n[{date} UTC]"
             if self.instance == "mastodon":
                 len_text = self._mastodon_len(tweet["text"])
             else:
@@ -210,6 +210,9 @@ def process_tweets(self, tweets_to_post):
                 tweet["text"] = f"{tweet['text'][:body_max_length]}…"
             else:
                 signature = ''
+            # Tweet body with NO orig_date included in square bracket
+            # tweet["text"] = f"{tweet['text']}{signature}"
+            # Tweet body with orig_date in square bracket
             tweet["text"] = f"{tweet['text']}{signature}{orig_date}"
         # Process poll if exists and no media is used
         tweet["polls"] = None
