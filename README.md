@@ -1,30 +1,3 @@
-# Stork (pleroma-bot)
-
-[![Build Status](https://travis-ci.com/robertoszek/pleroma-bot.svg?branch=develop)](https://app.travis-ci.com/github/robertoszek/pleroma-bot)
-[![Version](https://img.shields.io/pypi/v/pleroma-bot.svg)](https://pypi.org/project/pleroma-bot/)
-[![AUR version](https://img.shields.io/aur/version/python-pleroma-bot)](https://aur.archlinux.org/packages/python-pleroma-bot)
-[![codecov](https://codecov.io/gh/robertoszek/pleroma-bot/branch/master/graph/badge.svg?token=0c4Gzv4HjC)](https://codecov.io/gh/robertoszek/pleroma-bot)
-[![Python 3.6](https://img.shields.io/badge/python-3.6+-blue.svg)](https://www.python.org/downloads/release/python-360/)
-[![License](https://img.shields.io/github/license/robertoszek/pleroma-bot)](https://github.com/robertoszek/pleroma-bot/blob/master/LICENSE.md)
-
-![Stork](img/stork-smaller.svg)
-
-Mirror your favorite Twitter accounts in the Fediverse, so you can follow their updates from the comfort of your favorite instance. Or migrate your own to the Fediverse using a Twitter [archive](https://twitter.com/settings/your_twitter_data).
-
-[![Documentation](img/docs.png)](https://robertoszek.github.io/pleroma-bot)
-
-You can find this project at: 
-
-|                          GitHub                           |                          Gitlab                           |                                Gitea                                 |
-|:---------------------------------------------------------:|:---------------------------------------------------------:|:--------------------------------------------------------------------:|
-| [pleroma-bot](https://github.com/robertoszek/pleroma-bot) | [pleroma-bot](https://gitlab.com/robertoszek/pleroma-bot) | [pleroma-bot](https://gitea.robertoszek.xyz/robertoszek/pleroma-bot) |
-
-Supports:
-
-|                          Mastodon                           |                         Pleroma                         |                         Misskey                          |
-|:-----------------------------------------------------------:|:-------------------------------------------------------:|:--------------------------------------------------------:|
-| [![Mastodon](/img/mastodon.png)](https://joinmastodon.org/) | [![Pleroma](/img/pleroma.png)](https://pleroma.social/) | [![Misskey](/img/misskey.png)](https://misskey-hub.net/) |
-
 ## Introduction
 
 After using the pretty cool [mastodon-bot](https://github.com/yogthos/mastodon-bot) for a while, I found it was lacking some features which were of use to me. 
@@ -54,16 +27,86 @@ So basically, it does the following:
 * Adds some **metadata fields** to the Fediverse account, pointing to the original Twitter account or custom text.
 
 ## Installation
-### Using pip
+### Using Git
 ```
-$ pip install pleroma-bot
+$ git clone https://github.com/nazimulhaque/pleroma-bot.git
+$ cd pleroma-bot/
 ```
-### Using a package manager
-Here's a list of the available packages.
+## Test the Installation
+Once installed, cd into the ```pleroma-bot``` directory (if not already done):
+```
+$ cd pleroma-bot/
+```
+Now test that the package has been correctly installed using the following command:.
+```
+$ python3 -m pleroma_bot.cli -h
 
-| Package type   | Link                                                    | Maintainer                                    |
-|:--------------:|:-------------------------------------------------------:|:---------------------------------------------:|
-| AUR (Arch)     | https://aur.archlinux.org/packages/python-pleroma-bot  | [robertoszek](https://github.com/robertoszek) |
+
+                        `^y6gB@@BBQA{,
+                      :fB@@@@@@BBBBBQgU"
+                    `f@@@@@@@@BBBBQgg80H~
+                    H@@B@BB@BBBB#Qgg&0RNT
+                   z@@&B@BBBBBBQgg80RD6HK
+                  ;@@@QB@BBBB#Qgg&0RN6WqS
+                  q@@@@@BBBBQgg80RN6HAqSo          _             _
+                 z@@@@BBBB#Qg8&0RN6WqSUhr         | |           | |
+               -H@@@@BBBBQQg80RD6HAqSKh(       ___| |_ ___  _ __| | __
+              rB@@@BBBB#6Lm00DN6WqSUhfv       / __| __/ _ \| '__| |/ /
+             f@@@@BBBBf= |0RD6HAqSKhfv        \__ \ || (_) | |  |   <
+           =g@@@BBBBF=  "RDN6WqSUhff{         |___/\__\___/|_|  |_|\_|
+          c@@@@BBgu_   ~WD9HAqSKhfkl`
+        _6@@@BBNr     'qN6WqSUhhfXI'     .                           .       .
+       rB@@@B0r      `S6HAqSKhfkoCr  ,-. |  ,-. ,-. ,-. ,-,-. ,-.    |-. ,-. |-
+     `X@@@BQx       `I6WASShhfXFIy_  | | |  |-' |   | | | | | ,-| -- | | | | |
+    _g@@@Q\`        JHAqSKhfXoCwJz_  |-' `' `-' '   `-' ' ' ' `-^    `-' `-' `'
+   rB@@#x`         }WASShhfXsIyzuu,  |
+ `y@@&|          .IAqSKhfXoCwJzu1lr  '
+`D@&|           :KqSUhffXsIyzuu1llc,
+ff=            `==:::""",,,,________
+
+
+usage: cli.py [-h] [-c CONFIG] [-l LOG] [-n] [--forceDate [FORCEDATE]] [-s]
+              [-a ARCHIVE] [--verbose] [--version]
+
+Bot for mirroring one or multiple Twitter accounts in Pleroma/Mastodon.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -c CONFIG, --config CONFIG
+                        path of config file (config.yml) to use and parse. If
+                        not specified, it will try to find it in the current
+                        working directory.
+  -d, --daemon          run in daemon mode. By default it will re-run every
+                        60min. You can control this with --pollrate
+  -p POLLRATE, --pollrate POLLRATE
+                        only applies to daemon mode. How often to run the
+                        program in the background (in minutes). By default is
+                        60min.
+  -l LOG, --log LOG     path of log file (error.log) to create. If not
+                        specified, it will try to store it at your config file
+                        path
+  -n, --noProfile       skips Fediverse profile update (no background image,
+                        profile image, bio text, etc.)
+  --forceDate [FORCEDATE]
+                        forces the tweet retrieval to start from a specific
+                        date. The twitter_username value (FORCEDATE) can be
+                        supplied to only force it for that particular user in
+                        the config
+  -s, --skipChecks      skips first run checks
+  -a ARCHIVE, --archive ARCHIVE
+                        path of the Twitter archive file (zip) to use for
+                        posting tweets.
+  -t THREADS, --threads THREADS
+                        number of threads to use when processing tweets
+  -L LOCKFILE, --lockfile LOCKFILE
+                        path of lock file (pleroma_bot.lock) to prevent
+                        collisions with multiple bot instances. By default it
+                        will be placed next to your config file.
+  --verbose, -v
+  --version             show program's version number and exit
+
+```
+
 
 ## Usage
 ```console
@@ -185,55 +228,3 @@ NOTE: An ```error.log``` file will be created at the path from which ```pleroma-
 NOTE: If you have issues with cron running the bot you may have to specify the full path of your Python executable
 
 ```*/10 * * * * /usr/bin/python /usr/local/bin/pleroma-bot```
-
-## Screenshots
-
-![Screenshot](img/cmd.png)
-
-
-![Screenshot](img/screenshot.png)
-
-## Acknowledgements
-These projects proved to be immensely useful, they are Python wrappers for the Mastodon API and Twitter API respectively:
-
-* [Mastodon.py](https://github.com/halcy/Mastodon.py)
-* [twitter-python](https://github.com/bear/python-twitter)
-
-They were part of the impetus for this project, challenging myself to not just import them and use them, instead opting to directly do the heavy lifting with built-in python modules. 
-
-That and [mastodon-bot](https://github.com/yogthos/mastodon-bot) not working after upgrading the Pleroma instance I was admin on 😅. This event lead to repurposing this project (initially it only updated the profile info) and adding the tweet gathering and posting capabilities.
-
-## Contributing
-
-Patches, pull requests, and bug reports are more than [welcome](https://github.com/robertoszek/pleroma-bot/issues/new/choose), please keep the style consistent with the original source.
-
-
-## License
-
-MIT License
-
-Copyright (c) 2023 Roberto Chamorro / project contributors
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-**Tested and confirmed working against** :
-* ```Pleroma BE 2.4.2```
-* ```Mastodon v3.2.1```
-* ```Misskey 12.110.1```
-* ```Twitter API v1.1 and v2```
