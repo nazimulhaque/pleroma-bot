@@ -1,9 +1,6 @@
 ## Introduction
 
-After using the pretty cool [mastodon-bot](https://github.com/yogthos/mastodon-bot) for a while, I found it was lacking some features which were of use to me. 
-
-For precisely those cases I've written this Python project that automates them, asking such info to [Twitter's API](https://developer.twitter.com/en/docs/twitter-api/v1) and updating the relevant fields on the [Pleroma API](https://api.pleroma.social/)/[Mastodon API](https://docs.joinmastodon.org/client/intro/)/[Misskey API](https://misskey-hub.net/en/docs/api) side.
-
+Some modifications to the pretty cool https://github.com/robertoszek/pleroma-bot tool in order to basically import a Twitter archive into a Pleroma server, preserving the original Tweet time.
 
 ## Features 
 
