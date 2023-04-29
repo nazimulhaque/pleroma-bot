@@ -696,7 +696,14 @@ def main():
                             cw=tweet["cw"]
                         )
                         if not already_posted:
-                            update_db(tweet['id'], tweet['created_at'])
+                            update_db(tweet['id'],
+                                      tweet['created_at'],
+                                      user_item["db_host"],
+                                      user_item["db_port"],
+                                      user_item["db_name"],
+                                      user_item["db_username"],
+                                      user_item["db_password"],
+                                      )
                         posted[tweet["id"]] = post_id
                         posts_ids = user.posts_ids
                         with open(posts_path, "r+") as f:

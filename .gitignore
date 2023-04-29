@@ -13,3 +13,4 @@ error.log
 /config.yml.bak
 **/__pycache__/
 /site
+/tweets/

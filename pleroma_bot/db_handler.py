@@ -38,13 +38,13 @@ def update_pleroma_activities(conn, cur, oid, odate):
     count = cur.rowcount
 
 
-def update_db(twitter_id, original_date):
+def update_db(twitter_id, original_date, db_host, db_port, db_name, db_username, db_password):
     # Establish database connection
     connection = cursor = None
     try:
-        connection = psycopg2.connect(host="localhost", port="5432",
-                                      user="pleroma", password="theadmin",
-                                      database="pleroma")
+        connection = psycopg2.connect(host=db_host, port=db_port,
+                                      user=db_username, password=db_password,
+                                      database=db_name)
         cursor = connection.cursor()
         if connection:
             update_pleroma_objects(connection, cursor, twitter_id, original_date)
