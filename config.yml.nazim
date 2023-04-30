@@ -1,11 +1,16 @@
-pleroma_base_url: http://localhost:4000
+pleroma_base_url: [http://localhost:4000]
 max_tweets: 40
 users:
-- twitter_username: theNazimul
-  pleroma_username: nazimul
-  pleroma_token: m4FsKuHI2FhFN7qzID3WbUdWjXAKD5TIYkOK5t7PNFc
+- twitter_username: [theNazimul]
+  pleroma_username: [nazimul]
+  pleroma_token: [XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX]
+  archive: [/home/nazimul/Downloads/twitter-2023-03-05-6b5f7d8cd4c2626089d70be4627bf06a0f9ad2b9d934d21cbf00e924b532ccf3.zip]
+  db_host: "[localhost]"
+  db_port: "[5432]"
+  db_name: "[pleroma]"
+  db_username: "[pleroma]"
+  db_password: "[XXXXXXXXXX]"
   signature: true
-  archive: /media/sf_UbuntuVMShared/Twitter Importer/Twitter Archives/Nazim/twitter-2023-03-05-6b5f7d8cd4c2626089d70be4627bf06a0f9ad2b9d934d21cbf00e924b532ccf3.zip
   original_date: true
   skip_pin: true
   bio_text: "\U0001F916 BEEP BOOP \U0001F916 \n I'm a bot that mirrors {{ twitter_username }} Twitter's account.\n \n "
