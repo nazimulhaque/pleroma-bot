@@ -1,10 +1,10 @@
 ## Introduction
 
-Some modifications to the pretty cool https://github.com/robertoszek/pleroma-bot tool with the primary goal to import a Twitter backup archive into a Pleroma server, preserving the original Tweet time.
+Some modifications to the pretty cool [pleroma-bot](https://github.com/robertoszek/pleroma-bot) tool with the primary goal to import a Twitter backup archive into a Pleroma server, preserving the original Tweet time.
 
 ## Features 
 
-So basically, it does the following:
+So basically, [pleroma-bot](https://github.com/robertoszek/pleroma-bot) tool does the following:
 * Can parse a Twitter [archive](https://twitter.com/settings/your_twitter_data), moving all your tweets to the Fediverse
   * Preserving the original Tweet time.
 * Can use an RSS feed as the source of the tweets to post
@@ -30,14 +30,14 @@ So basically, it does the following:
 $ git clone https://github.com/nazimulhaque/pleroma-bot.git
 $ cd pleroma-bot/
 ```
-## Test the Installation
+### Test the Installation
 Once installed, cd into the ```pleroma-bot``` directory (if not already done):
 ```
 $ cd pleroma-bot/
 ```
 Now test that the package has been correctly installed using the following command:.
 ```
-$ python3 -m pleroma_bot.cli -h
+$ python3.10 -m pleroma_bot.cli -h
 
 
                         `^y6gB@@BBQA{,
@@ -117,70 +117,70 @@ You can either choose to use:
 - [Twitter tokens](https://developer.twitter.com/en/docs/authentication/api-reference/token) with a Developer account 
 
 However, our primary concern is to restore Twitter archive data into a Pleroma social media server.
-For this purpose, you'll need to create a configuration file (config.yaml) containing user and database credentials. These credentials are:
+For this purpose, you'll need to create a configuration file ```config.yaml``` containing user and database credentials. These credentials are:
 
 * Twitter username
 * Pleroma username
 * Pleroma user account access token
 * Twitter archive zip file location
 * Pleroma database credentials
-*
 
-Please follow the Configuration section below for details.
-
-In order to obtain the Pleroma access token, please follow https://tools.splat.soy/pleroma-access-token link and generate access token with read write follow scopes.
-
+Please follow the *Configuration* section below for details.
 
 ### Configuration
+* Please follow [this link](https://tools.splat.soy/pleroma-access-token) in order to obtain the Pleroma access token. Generate access token with read write follow scopes.
 
-Create a ```config.yml``` file in the same path where you are calling ```pleroma-bot```.
+* Create a ```config.yml``` file in the same path where you are calling ```pleroma-bot```.
 
-There's a config example in this repo called ```config.yml.nazim``` that can help you when filling yours out.
+  There's a config example in this repo called ```config.yml.nazim``` that can help you when filling yours out.
 
-Below is what the ```config.yml``` must contain for our use case. Please replace values indicated by square brackets in your specific file.
-```yaml
-pleroma_base_url: [http://localhost:4000]
-max_tweets: 40
-users:
-- twitter_username: [theNazimul]
-  pleroma_username: [nazimul]
-  pleroma_token: [m4FsKuHI2FhFN7qzID3WbUdWjXAKD5TIYkOK5t7PNFc]
-  signature: true
-  archive: [/media/sf_UbuntuVMShared/Twitter Importer/Twitter Archives/Nazim/twitter-2023-03-05-6b5f7d8cd4c2626089d70be4627bf06a0f9ad2b9d934d21cbf00e924b532ccf3.zip]
-  original_date: true
-  skip_pin: true
-  bio_text: "\U0001F916 BEEP BOOP \U0001F916 \n I'm a bot that mirrors {{ twitter_username }} Twitter's account.\n \n "
-  fields:
-      - name: "\U0001F426 Birdsite"
-        value: "{{ twitter_url }}"
-      - name: "Status"
-        value: "I am completely operational, and all my circuits are functioning perfectly."
-      - name: "WWW"
-        value: "{{ website }}"
-```
+  Below is what the ```config.yml``` must contain for our use case. Please replace values indicated by square brackets in your specific file.
+  ```yaml
+  pleroma_base_url: [http://localhost:4000]
+  max_tweets: 40
+  users:
+  - twitter_username: [theNazimul]
+    pleroma_username: [nazimul]
+    pleroma_token: [XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX]
+    archive: [/home/nazimul/Downloads/twitter-2023-03-05-6b5f7d8cd4c2626089d70be4627bf06a0f9ad2b9d934d21cbf00e924b532ccf3.zip]
+    db_host: [localhost]
+    db_port: [5432]
+    db_name: [pleroma]
+    db_username: [pleroma]
+    db_password: [XXXXXXXXXX]
+    signature: true
+    original_date: true
+    skip_pin: true
+    bio_text: "\U0001F916 BEEP BOOP \U0001F916 \n I'm a bot that mirrors {{ twitter_username }} Twitter's account.\n \n "
+    fields:
+        - name: "\U0001F426 Birdsite"
+          value: "{{ twitter_url }}"
+        - name: "Status"
+          value: "I am completely operational, and all my circuits are functioning perfectly."
+        - name: "WWW"
+          value: "{{ website }}"
+  ```
+ 
+* Please make sure the following line is present under ```config :pleroma, :instance,``` section in your ```/opt/pleroma/config/prod.secret.exs``` or ```/opt/pleroma/config/dev.secret.exs``` file:
+  ```
+  original_date: true,
+  ```
 
 ### Running the Bot
 
-If you're running the bot for the first time it will ask you for the date you wish to start retrieving tweets from (it will gather all from that date up to the present). 
-If you leave it empty and just press enter it will default to the oldest date that Twitter's API allows ('```2010-11-06T00:00:00Z```') for tweet retrieval.
-
-To force this behaviour in future runs you can use the ```--forceDate``` argument (be careful, no validation is performed with the already posted toots/posts by that Fediverse account and you can end up with duplicates posts/toots!).
-
-Additionally, you can provide a ```twitter_username``` if you only want to force the date for one user in your config.
-
-
 Run the bot using command:
 ```
-$ python3 -m pleroma_bot.cli
+$ python3.10 -m pleroma_bot.cli
 ```
 
 It might take hours to completely restore all of your tweet, depending on the number of tweets.
 
 ## Possible Issues
-You might face issues with file upload size limit. In that case, you can increase the file upload size limit in your ```pleroma/config/prod.secret.exs``` or ```pleroma/config/dev.secret.exs``` file:
+You might face issues with file upload size limit. In that case, you can increase the file upload size limit under ```config :pleroma, :instance,``` section in your ```pleroma/config/prod.secret.exs``` or ```pleroma/config/dev.secret.exs``` file:
 ```
+upload_limit: [104857600]
 ```
-
+Please replace value indicated in square bracket (file size in bytes) according to your need.
 
 ## Other Usages
 ```console
