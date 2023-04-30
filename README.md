@@ -1,11 +1,12 @@
 ## Introduction
 
-Some modifications to the pretty cool https://github.com/robertoszek/pleroma-bot tool in order to basically import a Twitter archive into a Pleroma server, preserving the original Tweet time.
+Some modifications to the pretty cool https://github.com/robertoszek/pleroma-bot tool with the primary goal to import a Twitter backup archive into a Pleroma server, preserving the original Tweet time.
 
 ## Features 
 
 So basically, it does the following:
 * Can parse a Twitter [archive](https://twitter.com/settings/your_twitter_data), moving all your tweets to the Fediverse
+  * Preserving the original Tweet time.
 * Can use an RSS feed as the source of the tweets to post
 * Retrieves latest **tweets** and posts them on the Fediverse account if their timestamp is newer than the last post.
   * Can filter out RTs or not
